@@ -6,8 +6,8 @@ using UnityEngine.UIElements;
 
 public class EnemyMovement : MonoBehaviour
 {
-    public float startPosX;
-    public float startPosY;
+    [SerializeField] private float startPosX;
+    [SerializeField] private float startPosY;
     
     public float endPosX;
     public float endPosY;
@@ -20,6 +20,8 @@ public class EnemyMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        startPosX = transform.position.x;
+        startPosY = transform.position.y;
         toEnd = true;
         transform.position = new Vector2(startPosX, startPosY);
         myRB = GetComponent<Rigidbody2D>();
