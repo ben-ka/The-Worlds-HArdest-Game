@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: 15
+  coin: {fileID: 4996763926495984627, guid: 2ada9ffa6c148e543a9da0248404061a, type: 3}
 --- !u!50 &4738173451418862054
 Rigidbody2D:
   serializedVersion: 4

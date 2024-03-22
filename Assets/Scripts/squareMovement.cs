@@ -25,11 +25,22 @@ public class squareMovement : MonoBehaviour
     private float startPosX;
     private float startPosY;
 
+    private int indexCoin;
+
+    private GameObject[] coins;
+
+
+    private Vector2[] coinsLocations;
+    public GameObject coin;
+    
+    
     // Start is called before the first frame update
     void Start()
     {
         startPosX = transform.position.x;
         startPosY = transform.position.y;
+
+
 
         isAlive = true;
         velocity = 5f;
@@ -46,6 +57,12 @@ public class squareMovement : MonoBehaviour
         {
             UnityEngine.Debug.LogWarning("Logic Manager not found in the scene. Make sure it exists and is named correctly.");
         }
+        
+        coinsLocations = new Vector2[GameObject.FindGameObjectsWithTag("Coin").Length];
+        for(int i = 0; i < coinsLocations.Length; i++) {
+            coinsLocations[i] = new Vector2(-999f, -999f);   
+        }
+        indexCoin = 0;
     }
 
     // Update is called once per frame
@@ -88,8 +105,11 @@ public class squareMovement : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Coin"))
         {
+            coinsLocations[indexCoin] = new Vector2(other.gameObject.transform.position.x, other.gameObject.transform.position.y);
+            UnityEngine.Debug.Log(coinsLocations[indexCoin]);
             Destroy(other.gameObject);
             logicManager.AddScore();
+            indexCoin++;
         }       
 
     }
@@ -98,7 +118,34 @@ public class squareMovement : MonoBehaviour
     {
         transform.position = new Vector2(startPosX, startPosY);
         isAlive = true;
+        ReturnAllCoins();
     }
+
+    private void ReturnAllCoins()
+    {
+        int i = 0; 
+        UnityEngine.Debug.Log("ReturnAllCoins");
+        Vector3 rotation = new Vector3(0f, 0f, 0f);
+        while (i < coinsLocations.Length && coinsLocations[i] != new Vector2(-999f, -999f))
+        {
+            UnityEngine.Debug.Log(i);
+            Vector2 position = coinsLocations[i];
+
+            Instantiate(coin, position, Quaternion.identity); 
+            i++;
+        }
+        GetCoinsReadyForNextTry();
+
+    }
+    private void GetCoinsReadyForNextTry(){
+        indexCoin = 0;
+        for(int j = 0; j < coinsLocations.Length; j++) {
+            coinsLocations[j] = new Vector2(-999f, -999f);   
+        }
+
+    }
+
+
 
     
     
