@@ -22,6 +22,7 @@ public class squareMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         isAlive = true;
         velocity = 5f;
         myRB = GetComponent<Rigidbody2D>();
