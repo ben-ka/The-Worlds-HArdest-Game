@@ -7,6 +7,7 @@ using Unity.Collections;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 using UnityEngine.Windows;
 
 public class squareMovement : MonoBehaviour
@@ -19,14 +20,32 @@ public class squareMovement : MonoBehaviour
     private float vertical;
     private bool isAlive;
 
+    private LogicManager logicManager;
+
+    private float startPosX;
+    private float startPosY;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        startPosX = transform.position.x;
+        startPosY = transform.position.y;
+
         isAlive = true;
         velocity = 5f;
         myRB = GetComponent<Rigidbody2D>();
-        
+
+
+        GameObject logicManagerObject = GameObject.Find("Logic Manager");
+        if (logicManagerObject != null)
+        {
+           
+            logicManager = logicManagerObject.GetComponent<LogicManager>();
+        }
+        else
+        {
+            UnityEngine.Debug.LogWarning("Logic Manager not found in the scene. Make sure it exists and is named correctly.");
+        }
     }
 
     // Update is called once per frame
@@ -63,8 +82,22 @@ public class squareMovement : MonoBehaviour
         if(other.gameObject.CompareTag("Enemy"))
         {
             isAlive = false;
+            logicManager.ResetScore();
+            ReturnToOriginalLocation();
             
-        }    
+        }
+        if (other.gameObject.CompareTag("Coin"))
+        {
+            Destroy(other.gameObject);
+            logicManager.AddScore();
+        }       
+
+    }
+
+    private void ReturnToOriginalLocation()
+    {
+        transform.position = new Vector2(startPosX, startPosY);
+        isAlive = true;
     }
 
     

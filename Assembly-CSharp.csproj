@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\EnemyMovement.cs" />
+    <Compile Include="Assets\Scripts\LogicManager.cs" />
     <Compile Include="Assets\Scripts\squareMovement.cs" />
   </ItemGroup>
   <ItemGroup>
