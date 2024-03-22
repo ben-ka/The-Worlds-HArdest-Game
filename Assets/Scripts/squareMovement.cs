@@ -33,6 +33,12 @@ public class squareMovement : MonoBehaviour
     private Vector2[] coinsLocations;
     public GameObject coin;
     
+
+    public AudioClip coinSound;
+
+    public AudioClip failedSound;
+
+    private AudioSource audioSource;
     
     // Start is called before the first frame update
     void Start()
@@ -48,6 +54,7 @@ public class squareMovement : MonoBehaviour
 
 
         GameObject logicManagerObject = GameObject.Find("Logic Manager");
+
         if (logicManagerObject != null)
         {
            
@@ -63,6 +70,9 @@ public class squareMovement : MonoBehaviour
             coinsLocations[i] = new Vector2(-999f, -999f);   
         }
         indexCoin = 0;
+
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -98,6 +108,7 @@ public class squareMovement : MonoBehaviour
         
         if(other.gameObject.CompareTag("Enemy"))
         {
+            audioSource.PlayOneShot(failedSound);
             isAlive = false;
             logicManager.ResetScore();
             ReturnToOriginalLocation();
@@ -105,8 +116,10 @@ public class squareMovement : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Coin"))
         {
+            
+            audioSource.PlayOneShot(coinSound);
             coinsLocations[indexCoin] = new Vector2(other.gameObject.transform.position.x, other.gameObject.transform.position.y);
-            UnityEngine.Debug.Log(coinsLocations[indexCoin]);
+            
             Destroy(other.gameObject);
             logicManager.AddScore();
             indexCoin++;
@@ -124,11 +137,10 @@ public class squareMovement : MonoBehaviour
     private void ReturnAllCoins()
     {
         int i = 0; 
-        UnityEngine.Debug.Log("ReturnAllCoins");
-        Vector3 rotation = new Vector3(0f, 0f, 0f);
+        
         while (i < coinsLocations.Length && coinsLocations[i] != new Vector2(-999f, -999f))
         {
-            UnityEngine.Debug.Log(i);
+            
             Vector2 position = coinsLocations[i];
 
             Instantiate(coin, position, Quaternion.identity); 

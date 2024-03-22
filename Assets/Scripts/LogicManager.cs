@@ -6,11 +6,21 @@ using UnityEngine.UI;
 public class LogicManager : MonoBehaviour
 {
     [SerializeField] private int score;
+    private int numCoins;
+
+    private bool canPass;
 
     // Start is called before the first frame update
     void Start()
     {
         score = 0;
+        numCoins = GameObject.FindGameObjectsWithTag("Coin").Length;
+        if(numCoins == 0){
+            canPass = true;
+        }
+        else{
+            canPass = false;
+        }
     }
 
     // Update is called once per frame
@@ -22,6 +32,10 @@ public class LogicManager : MonoBehaviour
     public void AddScore()
     {
         score++;
+        if(score == numCoins)
+        {
+            canPass = true;
+        }
     }
     public void ResetScore()
     {
