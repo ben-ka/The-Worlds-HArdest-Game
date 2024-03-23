@@ -40,5 +40,11 @@ public class LogicManager : MonoBehaviour
     public void ResetScore()
     {
         score = 0;
+        canPass = false;
+    }
+
+    public bool CanPassLevel()
+    {
+        return canPass;
     }
 }

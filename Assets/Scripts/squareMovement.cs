@@ -38,7 +38,11 @@ public class squareMovement : MonoBehaviour
 
     public AudioClip failedSound;
 
+    public AudioClip checkpoint;
+
     private AudioSource audioSource;
+
+    private bool passed;
     
     // Start is called before the first frame update
     void Start()
@@ -73,6 +77,7 @@ public class squareMovement : MonoBehaviour
 
 
         audioSource = GetComponent<AudioSource>();
+        passed = false;
     }
 
     // Update is called once per frame
@@ -123,7 +128,18 @@ public class squareMovement : MonoBehaviour
             Destroy(other.gameObject);
             logicManager.AddScore();
             indexCoin++;
-        }       
+        }
+
+        if(other.gameObject.CompareTag("Finish"))
+        {
+            if(logicManager.CanPassLevel() && !passed){
+                isAlive = false;
+                audioSource.PlayOneShot(checkpoint);
+                UnityEngine.Debug.Log("finish!!!!!");
+                passed = true;
+            }
+           
+        }     
 
     }
 
