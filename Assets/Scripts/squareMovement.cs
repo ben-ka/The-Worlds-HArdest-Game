@@ -60,8 +60,7 @@ public class squareMovement : MonoBehaviour
         GameObject logicManagerObject = GameObject.Find("Logic Manager");
 
         if (logicManagerObject != null)
-        {
-           
+        {   
             logicManager = logicManagerObject.GetComponent<LogicManager>();
         }
         else
@@ -70,7 +69,8 @@ public class squareMovement : MonoBehaviour
         }
         
         coinsLocations = new Vector2[GameObject.FindGameObjectsWithTag("Coin").Length];
-        for(int i = 0; i < coinsLocations.Length; i++) {
+        for(int i = 0; i < coinsLocations.Length; i++) 
+        {
             coinsLocations[i] = new Vector2(-999f, -999f);   
         }
         indexCoin = 0;
@@ -108,7 +108,7 @@ public class squareMovement : MonoBehaviour
 
     
   
-     private void OnTriggerEnter2D(Collider2D other) 
+    private void OnTriggerEnter2D(Collider2D other) 
     {
         
         if(other.gameObject.CompareTag("Enemy"))

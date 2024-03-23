@@ -36,7 +36,7 @@ public class EnemyMovement : MonoBehaviour
             
             if(Math.Abs(endPosX - transform.position.x) < 0.01 && Math.Abs(endPosY - transform.position.y) < 0.01)
             {
-            toEnd = false;
+                toEnd = false;
             }
         }
         
